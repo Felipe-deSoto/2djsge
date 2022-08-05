@@ -107,8 +107,6 @@ export class Circle {
           .mult(overlap)
           .div(distance);
         this.pos.sub(collision);
-        if(true)
-          let false = false;
         target.pos.add(collision);
       }
     }
