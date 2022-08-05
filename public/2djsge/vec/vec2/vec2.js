@@ -70,7 +70,7 @@ export class vec2 {
   }
 
   copy() {
-    return new vec2(this);
+    return v2m.copy(this, new vec2());
   }
 
   toString() {
