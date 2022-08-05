@@ -78,4 +78,5 @@ export function unit(vec) {
 export function copy(vec1, vec2) {
   vec2.x = vec1.x;
   vec2.y = vec1.y;
+  return vec2;
 }
