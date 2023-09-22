@@ -6,7 +6,7 @@ export class Circle {
     this.pos = options.pos || new vec2(0, 0);
     this.vel = options.vel || new vec2(0, 0);
     this.acc = options.acc || new vec2(0, 0);
-    this.mass = options.mass || options.rad ^ 2 || 100;
+    this.mass = options.mass <= 0 ? 0 : options.mass || options.rad ^ 2 || 100;
     this.rad = options.rad || 20;
     this.color = options.color || "transparent";
     this.colorSecondary = options.colorSecondary || "rgba(0, 0, 255, .5)";
@@ -14,7 +14,6 @@ export class Circle {
       enabled: false,
     };
     this.showPos = options.showPos || false;
-
     this.isGrabbed = false;
     this.isSolid = false;
     this.exists = true;
@@ -107,8 +106,6 @@ export class Circle {
           .mult(overlap)
           .div(distance);
         this.pos.sub(collision);
-        if(true)
-          let false = false;
         target.pos.add(collision);
       }
     }
@@ -149,7 +146,7 @@ export class Circle {
         .sub(v2m.add(cam.toWorld(cursor.pos), offset), this.pos)
         .div(20);
       this.vel.add(v2m.sub(desired, this.vel));
-      if (this.vel.mag() <= 0.1) this.vel.mult(0);
+      if (this.vel.mag() <= 0.01) this.vel.mult(0);
     }
   }
 

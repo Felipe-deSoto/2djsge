@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 * {
   overflow: hidden;
   background-color: #0D0F12;
@@ -16,7 +17,7 @@
   margin: 5px;
   display: flex;
   justify-content: space-between;
-  flex-flow: column;
+  flex-flow: row;
   align-items: stretch;
 }
 
@@ -32,6 +33,7 @@
   background-color: #111418;
   font-size: 26px;
 }
+
 .topbaritem {
   margin-right: 5px;
   border-radius: 5px;
@@ -40,6 +42,7 @@
   font-size: 20px;
   padding: 5px 10px 5px 20px;
 }
+
 .topbaritem:hover {
   border-radius: 5px;
   background-color: #ffffff10;
@@ -47,73 +50,57 @@
   font-size: 20px;
   padding: 5px 15px 5px 15px;
 }
+
 .container1{
   flex-grow: 1;
   display: flex;
   flex-flow: row;
 }
+
 .sidebar{
   background-color: #111418;
   padding: 5px;
   margin: 5px;
   border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  gap: 5px;
 }
+
 .sidebaritem {
   border-radius: 5px;
   background-color: #ffffff00;
-  color: #999999;
   font-size: 20px;
   padding: 5px 5px 5px 5px;
+  filter: brightness(.5);
 }
 
 .icon{
   width: 25px;
   background-color: transparent;
 }
+
 .sidebaritem:hover {
   background-color: #ffffff10;
-  color: #ffffff;
+  filter: brightness(1);
 }
+
+.selected {
+  background-color: #ffffff10;
+  filter: brightness(1);
+}
+
 .container3{
   width: calc(100% );
   display: flex;
   flex-flow: column;
 }
+
 .container2{
   height: auto;
   display: flex;
   flex-grow: 1;
   flex-flow: row;
-}
-
-.bodylist {
-  margin: 5px;
-  border-radius: 10px;
-  padding: 5px 10px 10px 10px;
-  width: calc(20% - 40px);
-  flex-grow: 1;
-  background-color: #111418;
-  font-size: 26px;
-}
-
-.listElement{
-  color: #999999;
-  background-color: #ffffff00;
-  border-radius: 5px;
-  font-size: 20px;
-  margin-top: 5px;
-  padding: 5px 20px 5px 15px;
-}
-
-.listElement:hover{
-  padding: 5px 20px 5px 10px;
-  color: #ffffff;
-}
-
-.selected{
-  padding: 5px 20px 5px 10px;
-  background-color: #ffffff10;
-  color: #ffffff;
 }
 
 .main-canvas {

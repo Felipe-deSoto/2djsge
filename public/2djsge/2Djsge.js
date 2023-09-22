@@ -6,13 +6,14 @@ import * as v2m from "./vec/vec2/vec2math.js";
 var world;
 var cam;
 var cursor;
-export function newWorld(canvas) {
-  world = new World(canvas, { panningEnabled: true });
+export function newWorld(canvas, options) {
+  world = new World(canvas, options);
   cam = world.cam;
   cursor = world.cursor;
 }
 
 export function addBody(body) {
+  body.addForce(world.gravity);
   world.bodies.push(body);
 }
 

@@ -9,6 +9,7 @@ export class World {
     let cursor = (this.cursor = new Cursor());
     //this.offset1;
     this.bodies = [];
+    this.gravity = options.gravity || new vec2(0, 0);
     this.panningEnabled = false;
     if (options) {
       if (options.panningEnabled) this.panningEnabled = options.panningEnabled;
@@ -17,13 +18,14 @@ export class World {
     addEventListener("contextmenu", (e) => {
       e.preventDefault();
     });
+
     addEventListener("wheel", (e) => {
       cursor.startScalePos = cam.toWorld(cursor.pos);
       cam.startScalePos = cam.pos;
       cam.clear();
       if (e.wheelDeltaY > 0 && cam.scale < 200)
         cam.scale = Math.min(cam.scale * 1.1, 200);
-      if (e.wheelDeltaY < 0) cam.scale *= 0.9;
+      if (e.wheelDeltaY < 0) cam.scale *= 0.8;
 
       let offset = v2m.sub(cursor.startScalePos, cam.toWorld(cursor.pos));
       let desiredPos = v2m.add(cam.pos, offset);
@@ -60,8 +62,9 @@ export class World {
       bodies.forEach((target) => {
         body.dynamicCollision(target);
         body.staticCollision(target);
+        body.attract(target);
       });
-      body.checkEdges();
+      // body.checkEdges();
     });
     if (cursor.grabbedBody.body)
       cursor.grabbedBody.body.checkGrabbed(cursor, this.cam);
@@ -73,12 +76,45 @@ export class World {
     let c = cam.c;
     cam.clear();
 
-    this.drawAxis(cam);
+    // this.drawAxis(cam);
     // this.drawGrid(cam, 1000);
 
     bodies.forEach((body) => {
       body.draw(c, cam);
     });
+
+    if (
+      this.cursor.grabbedBody.body &&
+      this.cursor.grabbedBody.body.isGrabbed
+    ) {
+      this.cursor.grabbedBody.offset.draw(
+        this.cursor.pos,
+        this.cam.c,
+        this.cam.scale
+      );
+      v2m
+        .sub(
+          v2m.add(cam.toWorld(this.cursor.pos), this.cursor.grabbedBody.offset),
+          this.cursor.grabbedBody.body.pos
+        )
+        .draw(
+          this.cam.toScreen(this.cursor.grabbedBody.body.pos),
+          this.cam.c,
+          this.cam.scale
+        );
+    }
+    c.fillStyle = "white";
+    c.font = "30px Consolas";
+    c.fillText(
+      cam.toWorld(this.cursor.pos).toInt().x.toString().padStart(25, " "),
+      10,
+      0 + 35
+    );
+    c.fillText(
+      cam.toWorld(this.cursor.pos).toInt().y.toString().padStart(25, " "),
+      10,
+      0 + 35 * 2
+    );
   }
 
   bodiesOnCursor() {
@@ -86,12 +122,12 @@ export class World {
     let cam = this.cam;
     let bodiesOnCursor = [];
     this.bodies.forEach((body) => {
-      if (cam.toWorld(cursor.pos).distanceTo(body.pos) <= body.rad) {
-        bodiesOnCursor.push({
-          body: body,
-          distance: cam.toWorld(cursor.pos).distanceTo(body.pos),
-        });
-      }
+      // if (cam.toWorld(cursor.pos).distanceTo(body.pos) <= body.rad) {
+      bodiesOnCursor.push({
+        body: body,
+        distance: cam.toWorld(cursor.pos).distanceTo(body.pos),
+      });
+      // }
     });
     return bodiesOnCursor;
   }

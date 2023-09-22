@@ -2,7 +2,6 @@ import * as v2m from "./vec2math.js";
 export * as v2m from "./vec2math.js";
 export class vec2 {
   constructor(a, b) {
-    a = 1;
     if (typeof a == "object") {
       this.x = a.x;
       this.y = a.y;
@@ -35,6 +34,7 @@ export class vec2 {
     else this.set(v2m.sub(this, new vec2(a, b)));
     return this;
   }
+
   mult(a) {
     return this.set(v2m.mult(this, a));
   }
@@ -83,12 +83,12 @@ export class vec2 {
     return this;
   }
 
-  draw(pos, c) {
+  draw(pos, c, scale) {
     c.lineWidth = 1;
     c.strokeStyle = "rgba(255, 255, 255, 1)";
     c.beginPath();
     c.moveTo(pos.x, pos.y);
-    c.lineTo(pos.x + this.x, pos.y + this.y);
+    c.lineTo(pos.x + this.x * scale, pos.y + this.y * scale);
     c.stroke();
   }
 
@@ -106,5 +106,9 @@ export class vec2 {
 
   unit() {
     return this.set(v2m.unit(this));
+  }
+
+  toInt() {
+    return new vec2(this.x | 0, this.y | 0);
   }
 }

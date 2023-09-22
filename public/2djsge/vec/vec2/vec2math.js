@@ -11,8 +11,9 @@ export function sub(vec1, vec2) {
   vec1.y -= vec2.y;
   return vec1;
 }
+
 export function div(a, b) {
-  a = a.copy();
+  if (typeof a == "object") a = a.copy();
   if (typeof b == "object") {
     a.x /= b.x;
     a.y /= b.y;
@@ -78,4 +79,5 @@ export function unit(vec) {
 export function copy(vec1, vec2) {
   vec2.x = vec1.x;
   vec2.y = vec1.y;
+  return vec2;
 }

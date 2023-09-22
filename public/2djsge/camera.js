@@ -23,14 +23,16 @@ export class camera {
     this.canvas.height = rect.bottom - rect.top;
     this.canvas.pos = new vec2(rect.left, rect.top);
   }
+
   clear() {
     this.c.fillStyle = "rgba(0, 0, 0, 1)";
     this.c.fillRect(0, 0, this.c.canvas.width, this.c.canvas.height);
   }
 
-  toScreen(vec) {
-    return v2m.sub(vec, this.pos).mult(this.scale);
+  toScreen(vect) {
+    return v2m.sub(vect, this.pos).mult(this.scale);
   }
+
   toWorld(vec) {
     return v2m.div(vec, this.scale).add(this.pos);
   }
